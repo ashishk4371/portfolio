@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="header" appReveal>
+    <app-section-heading
+      eyebrow="Selected work"
+      eyebrowIcon="layout"
+      title="Things I have built"
+      lede="A few projects where the interesting part was not the feature list."
+    />
+
+    <a class="btn btn--secondary header__link" routerLink="/work">
+      All projects
+      <app-icon name="arrow-right" size="0.9rem" />
+    </a>
+  </div>
+
+  <div class="grid">
+    @for (project of projects(); track project.slug; let i = $index) {
+      <app-project-card
+        [project]="project"
+        [featured]="i === 0"
+        [class.is-lead]="i === 0"
+        appReveal
+        [appRevealDelay]="i * 90"
+      />
+    }
+  </div>
+</div>

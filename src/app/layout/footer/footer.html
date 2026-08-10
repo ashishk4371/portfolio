@@ -1,0 +1,57 @@
+<div class="container footer">
+  <div class="footer__lead">
+    <p class="eyebrow">
+      <app-icon name="sparkles" />
+      {{ profile.availability.open ? profile.availability.message : 'Currently heads-down' }}
+    </p>
+
+    <p class="footer__pitch heading-lg">
+      Have something you want built properly?
+      <a class="footer__mail" [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+    </p>
+  </div>
+
+  <div class="footer__grid">
+    <nav class="footer__col" aria-label="Footer">
+      <h2 class="footer__title">Navigate</h2>
+      <ul>
+        @for (item of navItems; track item.label) {
+          <li>
+            <a [routerLink]="item.path" [fragment]="item.fragment">{{ item.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Elsewhere</h2>
+      <ul>
+        @for (social of profile.socials; track social.label) {
+          <li>
+            <a [href]="social.url" target="_blank" rel="noopener noreferrer">
+              {{ social.label }}
+              <app-icon name="arrow-up-right" size="0.85rem" />
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Colophon</h2>
+      <ul>
+        <li><span>Angular 21, zoneless</span></li>
+        <li><span>Prerendered &amp; server-rendered</span></li>
+        <li><span>Space Grotesk &amp; Inter</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__base">
+    <p>&copy; {{ year }} {{ profile.name }}. All rights reserved.</p>
+    <p class="footer__location">
+      <app-icon name="map-pin" size="0.85rem" />
+      {{ profile.location }}
+    </p>
+  </div>
+</div>

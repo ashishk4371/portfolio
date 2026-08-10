@@ -1,0 +1,35 @@
+<article class="card">
+  @if (!compact()) {
+    <app-gradient-cover class="card__cover" [hues]="post().cover" [label]="post().title" />
+  }
+
+  <div class="card__body">
+    <div class="card__meta">
+      <time [attr.datetime]="post().date">{{ post().date | appDate: 'long' }}</time>
+      <span aria-hidden="true">·</span>
+      <span class="card__reading">
+        <app-icon name="clock" size="0.85rem" />
+        {{ post().readingTime }} min read
+      </span>
+    </div>
+
+    <h3 class="card__title">
+      <a class="card__link" [routerLink]="['/blog', post().slug]">{{ post().title }}</a>
+    </h3>
+
+    <p class="card__description">{{ post().description }}</p>
+
+    <div class="card__footer">
+      <ul class="card__tags">
+        @for (tag of post().tags; track tag) {
+          <li><app-tag-chip [label]="tag" size="sm" /></li>
+        }
+      </ul>
+
+      <span class="card__cta" aria-hidden="true">
+        Read
+        <app-icon name="arrow-right" size="0.9rem" />
+      </span>
+    </div>
+  </div>
+</article>

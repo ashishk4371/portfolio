@@ -1,0 +1,75 @@
+/**
+ * Global stylesheet.
+ *
+ * Import order is deliberate and load-bearing:
+ *   tokens  -> raw values, must exist before anything references them
+ *   themes  -> binds semantic names onto those values
+ *   reset   -> normalises the platform using the semantic names
+ *   the rest are additive layers with no cross-dependencies.
+ *
+ * Component-scoped styles live with their components; only cross-cutting
+ * concerns belong here.
+ */
+@use 'styles/tokens';
+@use 'styles/themes';
+@use 'styles/reset';
+@use 'styles/typography';
+@use 'styles/animations';
+@use 'styles/utilities';
+@use 'styles/buttons';
+@use 'styles/markdown';
+@use 'styles/mixins' as *;
+
+/**
+ * Ambient background: a slow-drifting gradient mesh plus a fine grain overlay.
+ * Both are painted on pseudo-elements of <body> so they never enter the layout
+ * or intercept pointer events, and both are pure CSS (no images, no JS).
+ */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-below);
+}
+
+body::before {
+  opacity: var(--mesh-opacity);
+  background:
+    radial-gradient(
+      46rem 46rem at 12% -8%,
+      hsl(var(--hue-primary) 92% 62% / 0.24),
+      transparent 62%
+    ),
+    radial-gradient(
+      38rem 38rem at 92% 4%,
+      hsl(var(--hue-secondary) 88% 66% / 0.2),
+      transparent 60%
+    ),
+    radial-gradient(
+      42rem 42rem at 50% 108%,
+      hsl(var(--hue-tertiary) 90% 58% / 0.16),
+      transparent 64%
+    );
+
+  @include motion-safe {
+    animation: drift 26s var(--ease-in-out) infinite;
+  }
+}
+
+body::after {
+  opacity: var(--grain-opacity);
+  // Inline SVG feTurbulence: film grain with no network request.
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+// Prevent background scroll while a dialog / mobile nav owns the viewport.
+body.is-scroll-locked {
+  overflow: hidden;
+}
+
+* {
+  @include custom-scrollbar;
+}

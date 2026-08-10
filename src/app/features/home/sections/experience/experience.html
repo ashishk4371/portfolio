@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="header" appReveal>
+    <app-section-heading
+      eyebrow="Experience"
+      eyebrowIcon="clock"
+      title="Where I have worked"
+      lede="Six years across product companies and an agency, mostly on things people use every day."
+    />
+
+    <a class="btn btn--secondary header__link" [href]="resumeUrl" download>
+      <app-icon name="download" size="0.9rem" />
+      Download CV
+    </a>
+  </div>
+
+  <ol class="timeline">
+    @for (role of experiences; track role.id; let i = $index) {
+      <li class="entry" appReveal [appRevealDelay]="i * 100">
+        <span class="entry__marker" aria-hidden="true"></span>
+
+        <div class="entry__card">
+          <header class="entry__header">
+            <div>
+              <h3 class="entry__role">{{ role.role }}</h3>
+              <p class="entry__company">
+                @if (role.companyUrl) {
+                  <a [href]="role.companyUrl" target="_blank" rel="noopener noreferrer">
+                    {{ role.company }}
+                    <app-icon name="arrow-up-right" size="0.8rem" />
+                  </a>
+                } @else {
+                  <span>{{ role.company }}</span>
+                }
+                <span class="entry__sep" aria-hidden="true">·</span>
+                <span>{{ role.type }}</span>
+              </p>
+            </div>
+
+            <div class="entry__dates">
+              <span class="entry__range">
+                {{ role.startDate | appDate: 'month-year' }} —
+                {{ role.endDate ? (role.endDate | appDate: 'month-year') : 'Present' }}
+              </span>
+              <span class="entry__duration">{{ duration(role.startDate, role.endDate) }}</span>
+              <span class="entry__location">{{ role.location }}</span>
+            </div>
+          </header>
+
+          <p class="entry__summary">{{ role.summary }}</p>
+
+          <ul class="entry__highlights">
+            @for (highlight of role.highlights; track highlight) {
+              <li>
+                <app-icon name="check" size="0.9rem" />
+                <span>{{ highlight }}</span>
+              </li>
+            }
+          </ul>
+
+          <ul class="entry__stack">
+            @for (tech of role.stack; track tech) {
+              <li><app-tag-chip [label]="tech" size="sm" /></li>
+            }
+          </ul>
+        </div>
+      </li>
+    }
+  </ol>
+</div>

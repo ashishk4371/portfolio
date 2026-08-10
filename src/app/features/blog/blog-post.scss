@@ -1,0 +1,160 @@
+@use 'mixins' as *;
+
+.article {
+  position: relative;
+  display: block;
+}
+
+/* --------------------------------------------------------------- header -- */
+.article__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding-block: var(--space-2xl) var(--space-xl);
+}
+
+.article__back {
+  align-self: flex-start;
+}
+
+.article__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.article__title {
+  color: var(--text-primary);
+}
+
+.article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+}
+
+/* --------------------------------------------------------------- layout -- */
+.article__layout {
+  display: grid;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-2xl);
+
+  @include respond-to('lg') {
+    // Sidebar first in the source is avoided; instead the TOC is placed in the
+    // left column visually while staying after the heading in reading order.
+    grid-template-columns: 15rem minmax(0, 1fr);
+    gap: var(--space-2xl);
+    justify-content: center;
+  }
+}
+
+.article__body {
+  min-width: 0;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+
+  @include respond-to('lg') {
+    margin-inline: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ toc -- */
+.toc {
+  display: none;
+
+  @include respond-to('lg') {
+    display: block;
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-md));
+    align-self: start;
+    max-height: calc(100svh - var(--header-height) - var(--space-2xl));
+    overflow-y: auto;
+    padding-right: var(--space-2xs);
+
+    @include custom-scrollbar;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    border-left: 1px solid var(--border);
+  }
+
+  a {
+    display: block;
+    padding: 0.3rem 0 0.3rem var(--space-sm);
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--text-muted);
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+
+    @include focus-ring(2px);
+
+    &:hover {
+      color: var(--text-primary);
+    }
+
+    &.is-active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+  }
+}
+
+.toc__title {
+  margin-bottom: var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.toc__item--nested a {
+  padding-left: calc(var(--space-sm) + var(--space-xs));
+  font-size: var(--text-xs);
+}
+
+/* -------------------------------------------------------------- related -- */
+.article__related {
+  padding-block: var(--space-xl);
+  border-top: 1px solid var(--border);
+
+  h2 {
+    margin-bottom: var(--space-md);
+    color: var(--text-primary);
+  }
+}
+
+.article__related-grid {
+  display: grid;
+  gap: var(--space-md);
+
+  @include respond-to('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.missing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}

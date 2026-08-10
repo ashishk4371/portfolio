@@ -1,0 +1,213 @@
+@use 'mixins' as *;
+
+/* ----------------------------------------------------------------- hero -- */
+.hero {
+  position: relative;
+  padding-block: var(--space-2xl) var(--space-xl);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/** Cover art bleeds behind the title and fades out into the page background. */
+.hero__cover {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  opacity: 0.35;
+  mask-image: linear-gradient(to bottom, hsl(0 0% 0% / 0.9), transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, hsl(0 0% 0% / 0.9), transparent 85%);
+}
+
+.hero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.hero__back {
+  align-self: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.hero__title {
+  color: var(--text-primary);
+}
+
+.hero__tagline {
+  max-width: 40rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  margin-top: var(--space-sm);
+}
+
+/* ----------------------------------------------------------------- body -- */
+.body {
+  display: grid;
+  gap: var(--space-xl);
+  padding-block: var(--space-2xl);
+
+  @include respond-to('lg') {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+    gap: var(--space-2xl);
+  }
+}
+
+.body__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  min-width: 0;
+}
+
+.highlights {
+  h2 {
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    color: var(--text-secondary);
+  }
+
+  app-icon {
+    margin-top: 0.25em;
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+}
+
+.body__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+
+  @include respond-to('lg') {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-md));
+    align-self: start;
+  }
+}
+
+.panel {
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.panel__title {
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  dd {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    @include gradient-text;
+  }
+
+  dt {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+/* ---------------------------------------------------------------- pager -- */
+.pager {
+  display: grid;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-2xl);
+
+  @include respond-to('sm') {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pager__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+
+  @include focus-ring;
+
+  &:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+}
+
+.pager__link--next {
+  text-align: right;
+
+  .pager__label {
+    justify-content: flex-end;
+  }
+}
+
+.pager__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.pager__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+/* -------------------------------------------------------------- missing -- */
+.missing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}

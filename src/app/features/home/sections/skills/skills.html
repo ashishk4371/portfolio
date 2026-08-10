@@ -1,0 +1,43 @@
+<div class="container">
+  <app-section-heading
+    eyebrow="Toolkit"
+    eyebrowIcon="code"
+    title="What I reach for"
+    lede="Depth where it counts, working knowledge everywhere else. The bars are a self-assessment, not a certification."
+    appReveal
+  />
+
+  <div class="grid">
+    @for (group of groups; track group.id; let i = $index) {
+      <section class="group" appReveal [appRevealDelay]="i * 80">
+        <header class="group__header">
+          <span class="group__icon"><app-icon [name]="$any(group.icon)" size="1.15rem" /></span>
+          <div>
+            <h3 class="group__title">{{ group.title }}</h3>
+            <p class="group__description">{{ group.description }}</p>
+          </div>
+        </header>
+
+        <ul class="group__skills">
+          @for (skill of group.skills; track skill.name) {
+            <li class="skill">
+              <span class="skill__name">{{ skill.name }}</span>
+              <span
+                class="skill__meter"
+                role="meter"
+                [attr.aria-valuenow]="skill.level"
+                aria-valuemin="1"
+                aria-valuemax="5"
+                [attr.aria-label]="skill.name + ' proficiency'"
+              >
+                @for (step of meter; track step) {
+                  <span class="skill__step" [class.is-filled]="step <= skill.level"></span>
+                }
+              </span>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </div>
+</div>

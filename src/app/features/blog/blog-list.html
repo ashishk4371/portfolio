@@ -1,0 +1,71 @@
+<div class="section container">
+  <app-section-heading
+    eyebrow="Blog"
+    eyebrowIcon="code"
+    title="Writing about the work"
+    lede="Migrations that went well, migrations that did not, and the occasional strong opinion. {{
+      total()
+    }} posts so far."
+    appReveal
+  />
+
+  <div class="toolbar" appReveal>
+    <div class="search">
+      <app-icon class="search__icon" name="search" size="1rem" />
+      <label class="visually-hidden" for="post-search">Search posts</label>
+      <input
+        id="post-search"
+        class="search__input"
+        type="search"
+        placeholder="Search posts…"
+        autocomplete="off"
+        [value]="filters().query"
+        (input)="onSearch($event)"
+      />
+    </div>
+
+    <ul class="tags" aria-label="Filter by tag">
+      @for (entry of tags(); track entry.tag) {
+        <li>
+          <app-tag-chip
+            [label]="entry.tag"
+            [count]="entry.count"
+            interactive
+            [active]="filters().tag === entry.tag"
+            (selected)="onTag($event)"
+          />
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="results">
+    <p role="status" aria-live="polite">
+      {{ posts().length }} post{{ posts().length === 1 ? '' : 's' }}
+      @if (hasFilters()) {
+        <span>matching your filters</span>
+      }
+    </p>
+
+    @if (hasFilters()) {
+      <button type="button" class="btn btn--ghost btn--sm" (click)="clear()">
+        <app-icon name="x-close" size="0.85rem" />
+        Clear filters
+      </button>
+    }
+  </div>
+
+  @if (posts().length) {
+    <div class="grid">
+      @for (post of posts(); track post.slug; let i = $index) {
+        <app-post-card [post]="post" appReveal [appRevealDelay]="i * 70" />
+      }
+    </div>
+  } @else {
+    <div class="empty">
+      <app-icon name="search" size="1.5rem" />
+      <p>No posts match that search.</p>
+      <button type="button" class="btn btn--secondary btn--sm" (click)="clear()">Clear filters</button>
+    </div>
+  }
+</div>

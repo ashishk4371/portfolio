@@ -1,0 +1,292 @@
+@use 'mixins' as *;
+
+/**
+ * Prose styles for rendered markdown (blog posts, project write-ups).
+ *
+ * Scoped to `.prose` rather than applied globally so the reset stays authoritative
+ * everywhere else. Only the subtree produced by the markdown renderer opts in.
+ */
+.prose {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+
+  > * + * {
+    margin-top: var(--space-md);
+  }
+
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    letter-spacing: var(--tracking-snug);
+    line-height: var(--leading-snug);
+    scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+  }
+
+  h2 {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-2xl);
+  }
+
+  h3 {
+    font-size: var(--text-xl);
+    margin-top: var(--space-xl);
+  }
+
+  h4 {
+    font-size: var(--text-lg);
+    margin-top: var(--space-lg);
+  }
+
+  // Anchor affordance on headings, revealed on hover/focus.
+  .heading-anchor {
+    margin-left: 0.4em;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+  }
+
+  h2:hover .heading-anchor,
+  h3:hover .heading-anchor,
+  h4:hover .heading-anchor,
+  .heading-anchor:focus-visible {
+    opacity: 1;
+  }
+
+  strong {
+    color: var(--text-primary);
+    font-weight: var(--weight-semibold);
+  }
+
+  a:not(.heading-anchor) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    transition: text-decoration-color var(--duration-fast) var(--ease-out);
+
+    &:hover {
+      text-decoration-color: var(--accent);
+    }
+
+    @include focus-ring(2px);
+  }
+
+  ul,
+  ol {
+    padding-left: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
+  }
+
+  li::marker {
+    color: var(--accent);
+  }
+
+  blockquote {
+    margin: var(--space-lg) 0;
+    padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    background: var(--accent-soft);
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--border);
+    margin-block: var(--space-2xl);
+  }
+
+  img {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    display: block;
+    overflow-x: auto;
+    @include custom-scrollbar;
+  }
+
+  th,
+  td {
+    padding: var(--space-2xs) var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  th {
+    color: var(--text-primary);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  // Inline code
+  :not(pre) > code {
+    padding: 0.15em 0.42em;
+    border-radius: var(--radius-xs);
+    background: var(--surface-inset);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 0.85em;
+    white-space: nowrap;
+  }
+
+  pre.code-block {
+    position: relative;
+  }
+
+  // Language badge emitted by the markdown renderer.
+  .code-lang {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  pre {
+    margin-block: var(--space-lg);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    background: var(--surface-inset);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    @include custom-scrollbar;
+
+    code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--text-primary);
+      white-space: pre;
+    }
+  }
+}
+
+/**
+ * Syntax highlighting.
+ *
+ * Rather than shipping two highlight.js stylesheets and swapping them on theme
+ * change, token colours are mapped onto theme-aware custom properties. One
+ * stylesheet, both themes, no flash on toggle.
+ */
+:root {
+  --code-keyword: hsl(var(--hue-secondary) 80% 76%);
+  --code-string: hsl(150 60% 62%);
+  --code-number: hsl(28 90% 68%);
+  --code-comment: var(--text-muted);
+  --code-function: hsl(var(--hue-tertiary) 80% 62%);
+  --code-variable: hsl(var(--hue-primary) 90% 78%);
+  --code-tag: hsl(350 80% 72%);
+}
+
+:root[data-theme='light'] {
+  --code-keyword: hsl(var(--hue-secondary) 62% 46%);
+  --code-string: hsl(150 55% 32%);
+  --code-number: hsl(24 80% 42%);
+  --code-comment: var(--text-muted);
+  --code-function: hsl(var(--hue-tertiary) 70% 34%);
+  --code-variable: hsl(var(--hue-primary) 62% 50%);
+  --code-tag: hsl(350 65% 46%);
+}
+
+@media (prefers-color-scheme: light) {
+  :root[data-theme='system'] {
+    --code-keyword: hsl(var(--hue-secondary) 62% 46%);
+    --code-string: hsl(150 55% 32%);
+    --code-number: hsl(24 80% 42%);
+    --code-function: hsl(var(--hue-tertiary) 70% 34%);
+    --code-variable: hsl(var(--hue-primary) 62% 50%);
+    --code-tag: hsl(350 65% 46%);
+  }
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag,
+.hljs-type {
+  color: var(--code-keyword);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: var(--code-string);
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link {
+  color: var(--code-number);
+}
+
+.hljs-title,
+.hljs-title.function_,
+.hljs-section {
+  color: var(--code-function);
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attr,
+.hljs-property,
+.hljs-params {
+  color: var(--code-variable);
+}
+
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-tag,
+.hljs-built_in {
+  color: var(--code-tag);
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: var(--weight-bold);
+}
+.hljs-deletion {
+  color: hsl(0 70% 66%);
+}

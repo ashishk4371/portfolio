@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  margin-bottom: var(--space-xl);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-width: 46rem;
+}
+
+:host(.is-centered) .heading {
+  align-items: center;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.heading__title {
+  color: var(--text-primary);
+}
+
+.heading__lede {
+  max-width: 42rem;
+}

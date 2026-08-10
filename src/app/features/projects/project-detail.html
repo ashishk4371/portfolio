@@ -1,0 +1,106 @@
+@if (project(); as project) {
+  <article>
+    <header class="hero">
+      <app-gradient-cover class="hero__cover" [hues]="project.cover" [label]="project.title" />
+
+      <div class="container hero__inner">
+        <a class="hero__back link-arrow" routerLink="/work">
+          <app-icon name="arrow-left" size="0.9rem" />
+          All projects
+        </a>
+
+        <p class="eyebrow">{{ categoryLabel() }} · {{ project.year }}</p>
+        <h1 class="hero__title display-2">{{ project.title }}</h1>
+        <p class="hero__tagline body-lg">{{ project.tagline }}</p>
+
+        <div class="hero__actions">
+          @for (link of project.links; track link.url) {
+            <a
+              class="btn"
+              [class.btn--primary]="$first"
+              [class.btn--secondary]="!$first"
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <app-icon [name]="$any(link.icon)" size="0.95rem" />
+              {{ link.label }}
+            </a>
+          }
+        </div>
+      </div>
+    </header>
+
+    <div class="container body">
+      <div class="body__main">
+        <section class="prose" appReveal>
+          @for (paragraph of project.description; track $index) {
+            <p>{{ paragraph }}</p>
+          }
+        </section>
+
+        <section class="highlights" appReveal>
+          <h2 class="heading-md">What made it work</h2>
+          <ul>
+            @for (highlight of project.highlights; track highlight) {
+              <li>
+                <app-icon name="check" size="1rem" />
+                <span>{{ highlight }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+      </div>
+
+      <aside class="body__aside" aria-label="Project details">
+        @if (project.metrics.length) {
+          <section class="panel" appReveal>
+            <h2 class="panel__title">Outcomes</h2>
+            <dl class="metrics">
+              @for (metric of project.metrics; track metric.label) {
+                <div>
+                  <dd>{{ metric.value }}</dd>
+                  <dt>{{ metric.label }}</dt>
+                </div>
+              }
+            </dl>
+          </section>
+        }
+
+        <section class="panel" appReveal [appRevealDelay]="80">
+          <h2 class="panel__title">Stack</h2>
+          <ul class="stack">
+            @for (tech of project.stack; track tech) {
+              <li><app-tag-chip [label]="tech" size="sm" /></li>
+            }
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <nav class="container pager" aria-label="Project navigation">
+      @if (adjacent().previous; as previous) {
+        <a class="pager__link" [routerLink]="['/work', previous.slug]">
+          <span class="pager__label"><app-icon name="arrow-left" size="0.8rem" /> Previous</span>
+          <span class="pager__title">{{ previous.title }}</span>
+        </a>
+      }
+
+      @if (adjacent().next; as next) {
+        <a class="pager__link pager__link--next" [routerLink]="['/work', next.slug]">
+          <span class="pager__label">Next <app-icon name="arrow-right" size="0.8rem" /></span>
+          <span class="pager__title">{{ next.title }}</span>
+        </a>
+      }
+    </nav>
+  </article>
+} @else {
+  <div class="section container missing">
+    <h1 class="display-3">Project not found</h1>
+    <p class="body-lg">There is nothing at this address. It may have been renamed.</p>
+    <a class="btn btn--primary" routerLink="/work">
+      Browse all projects
+      <app-icon name="arrow-right" size="0.9rem" />
+    </a>
+  </div>
+}
