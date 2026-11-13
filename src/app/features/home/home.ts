@@ -2,25 +2,29 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { PROFILE } from '../../core/data';
 import { SeoService } from '../../core/services';
+import { SocialLinks } from '../../shared/components/social-links';
 
 @Component({
   selector: 'app-home',
+  imports: [SocialLinks],
   template: `
-    <h1>{{ profile.name }}</h1>
+    <h1 class="visually-hidden">{{ profile.name }}</h1>
+
+    <img
+      class="photo"
+      [src]="profile.photo"
+      [alt]="'Photo of ' + profile.name"
+      width="160"
+      height="160"
+    />
+
     <p class="muted">{{ profile.role }} · {{ profile.location }}</p>
 
     @for (paragraph of profile.summary; track $index) {
       <p>{{ paragraph }}</p>
     }
 
-    <h2>Elsewhere</h2>
-    <ul class="inline-list">
-      @for (social of profile.socials; track social.label) {
-        <li>
-          <a [href]="social.url" rel="noopener noreferrer">{{ social.label }}</a>
-        </li>
-      }
-    </ul>
+    <app-social-links [links]="profile.socials" />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -45,7 +49,7 @@ export class Home {
       email: `mailto:${PROFILE.email}`,
       url: seo.absoluteUrl('/'),
       address: { '@type': 'PostalAddress', addressLocality: PROFILE.location },
-      sameAs: PROFILE.socials.filter((s) => s.label !== 'Email').map((s) => s.url),
+      sameAs: PROFILE.socials.filter((s) => s.icon !== 'mail').map((s) => s.url),
     });
   }
 }

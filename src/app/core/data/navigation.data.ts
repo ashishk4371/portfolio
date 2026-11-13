@@ -4,7 +4,6 @@ export interface NavItem {
 }
 
 export const PRIMARY_NAV: readonly NavItem[] = [
-  { label: 'Home', path: '/' },
   { label: 'Blog', path: '/blog' },
   { label: 'Projects', path: '/projects' },
   { label: 'Resume', path: '/resume' },

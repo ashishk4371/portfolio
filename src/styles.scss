@@ -1,14 +1,14 @@
 /**
  * Global stylesheet. Flat colours, system fonts, one narrow column.
- * Light by default; follows the OS when it prefers dark.
+ * Light only: a warm off-white background.
  */
 :root {
-  --bg: #ffffff;
-  --text: #1a1a1a;
-  --muted: #666666;
+  --bg: #f6f1e7;
+  --text: #1f1d1a;
+  --muted: #6b655a;
   --link: #0b57d0;
-  --border: #e2e2e2;
-  --code-bg: #f4f4f4;
+  --border: #ddd5c3;
+  --code-bg: #ece5d6;
 
   --code-keyword: #8a2be2;
   --code-string: #1a7f37;
@@ -16,24 +16,7 @@
   --code-function: #0b57d0;
   --code-tag: #c0224a;
 
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #111111;
-    --text: #e8e8e8;
-    --muted: #9a9a9a;
-    --link: #8ab4f8;
-    --border: #2e2e2e;
-    --code-bg: #1b1b1b;
-
-    --code-keyword: #c792ea;
-    --code-string: #7fd18b;
-    --code-number: #f0a860;
-    --code-function: #8ab4f8;
-    --code-tag: #f07a95;
-  }
+  color-scheme: light;
 }
 
 *,
@@ -190,6 +173,43 @@ main:focus {
 
   p {
     margin: 0;
+  }
+}
+
+/* Home ------------------------------------------------------------------ */
+.photo {
+  display: block;
+  width: 10rem;
+  height: 10rem;
+  margin: 2.5rem 0 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+
+  a {
+    display: inline-flex;
+    padding: 0.25rem;
+    color: var(--muted);
+
+    &:hover {
+      color: var(--text);
+    }
   }
 }
 
