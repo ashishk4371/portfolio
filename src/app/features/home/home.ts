@@ -18,8 +18,6 @@ import { SocialLinks } from '../../shared/components/social-links';
       height="160"
     />
 
-    <p class="muted">{{ profile.role }} · {{ profile.location }}</p>
-
     @for (paragraph of profile.summary; track $index) {
       <p>{{ paragraph }}</p>
     }
