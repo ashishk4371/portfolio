@@ -1,59 +1,20 @@
-<div class="section container">
-  <app-section-heading
-    eyebrow="Work"
-    eyebrowIcon="layout"
-    title="Everything worth showing"
-    lede="Products, platforms and tools I have designed, built or rescued. Filter by the kind of work if you are looking for something specific."
-    appReveal
-  />
+<h1>Projects</h1>
 
-  <div class="filters" role="group" aria-label="Filter projects by category">
-    <button
-      type="button"
-      class="filter"
-      [class.is-active]="activeCategory() === null"
-      [attr.aria-pressed]="activeCategory() === null"
-      (click)="select(null)"
-    >
-      All
-      <span class="filter__count">{{ projects().length }}</span>
-    </button>
-
-    @for (category of categories(); track category.id) {
-      <button
-        type="button"
-        class="filter"
-        [class.is-active]="activeCategory() === category.id"
-        [attr.aria-pressed]="activeCategory() === category.id"
-        (click)="select(category.id)"
-      >
-        {{ category.label }}
-        <span class="filter__count">{{ category.count }}</span>
-      </button>
-    }
-  </div>
-
-  <!--
-    aria-live so filtering announces the new result count. Screen-reader users
-    otherwise get no feedback that the button did anything.
-  -->
-  <p class="results" role="status" aria-live="polite">
-    {{ projects().length }} project{{ projects().length === 1 ? '' : 's' }}
-  </p>
-
-  @if (projects().length) {
-    <div class="grid">
-      @for (project of projects(); track project.slug; let i = $index) {
-        <app-project-card [project]="project" appReveal [appRevealDelay]="i * 70" />
+<ul class="entries">
+  @for (project of projects(); track project.slug) {
+    <li>
+      <h2>{{ project.title }}</h2>
+      <p class="muted">{{ project.year }} · {{ project.stack.join(', ') }}</p>
+      <p>{{ project.tagline }}</p>
+      @if (project.links.length) {
+        <ul class="inline-list">
+          @for (link of project.links; track link.url) {
+            <li>
+              <a [href]="link.url" rel="noopener noreferrer">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
       }
-    </div>
-  } @else {
-    <div class="empty">
-      <app-icon name="search" size="1.5rem" />
-      <p>Nothing in this category yet.</p>
-      <button type="button" class="btn btn--secondary btn--sm" (click)="select(null)">
-        Show all projects
-      </button>
-    </div>
+    </li>
   }
-</div>
+</ul>

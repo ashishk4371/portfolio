@@ -26,6 +26,6 @@ export interface Project {
   readonly highlights: readonly string[];
   readonly metrics: readonly ProjectMetric[];
   readonly links: readonly ProjectLink[];
-  /** Two hues (0–360) used to generate the card's gradient cover art. */
+  /** Unused; kept for data compatibility. */
   readonly cover: readonly [number, number];
 }

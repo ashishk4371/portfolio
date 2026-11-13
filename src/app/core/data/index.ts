@@ -3,4 +3,3 @@ export * from './navigation.data';
 export * from './profile.data';
 export * from './projects.data';
 export * from './skills.data';
-export * from './testimonials.data';

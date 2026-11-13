@@ -1,76 +1,18 @@
 @if (post(); as post) {
-  <article class="article">
-    <app-scroll-progress />
+  <article>
+    <p><a routerLink="/blog">&larr; All posts</a></p>
 
-    <header class="container--narrow article__header">
-      <a class="link-arrow article__back" routerLink="/blog">
-        <app-icon name="arrow-left" size="0.9rem" />
-        All posts
-      </a>
+    <h1>{{ post.title }}</h1>
+    <p class="muted">
+      <time [attr.datetime]="post.date">{{ post.date | appDate: 'long' }}</time>
+      · {{ post.readingTime }} min read
+    </p>
 
-      <ul class="article__tags">
-        @for (tag of post.tags; track tag) {
-          <li><app-tag-chip [label]="tag" size="sm" /></li>
-        }
-      </ul>
-
-      <h1 class="article__title display-2">{{ post.title }}</h1>
-      <p class="article__description body-lg">{{ post.description }}</p>
-
-      <div class="article__meta">
-        <time [attr.datetime]="post.date">{{ post.date | appDate: 'long' }}</time>
-        <span aria-hidden="true">·</span>
-        <span><app-icon name="clock" size="0.85rem" /> {{ post.readingTime }} min read</span>
-        <span aria-hidden="true">·</span>
-        <span>{{ post.wordCount }} words</span>
-      </div>
-    </header>
-
-    <div class="container article__layout">
-      @if (toc().length > 1) {
-        <nav class="toc" aria-label="On this page">
-          <h2 class="toc__title">On this page</h2>
-          <ul>
-            @for (entry of toc(); track entry.id) {
-              <li [class.toc__item--nested]="entry.level === 3">
-                <a
-                  [href]="'#' + entry.id"
-                  [class.is-active]="activeHeading() === entry.id"
-                  [attr.aria-current]="activeHeading() === entry.id ? 'true' : null"
-                >
-                  {{ entry.text }}
-                </a>
-              </li>
-            }
-          </ul>
-        </nav>
-      }
-
-      <!--
-        Trusted HTML: produced by renderMarkdown() from markdown that ships in
-        this repository. See SafeHtmlPipe for why the bypass is required.
-      -->
-      <div class="article__body prose" [innerHTML]="html() | appSafeHtml"></div>
-    </div>
-
-    @if (related().length) {
-      <aside class="container article__related" aria-labelledby="related-heading">
-        <h2 id="related-heading" class="heading-md">Keep reading</h2>
-        <div class="article__related-grid">
-          @for (item of related(); track item.slug) {
-            <app-post-card [post]="item" />
-          }
-        </div>
-      </aside>
-    }
+    <!-- Trusted HTML produced by renderMarkdown() from markdown shipped in this repository. -->
+    <div class="prose" [innerHTML]="html() | appSafeHtml"></div>
   </article>
 } @else {
-  <div class="section container missing">
-    <h1 class="display-3">Post not found</h1>
-    <p class="body-lg">That post does not exist, or it is still a draft.</p>
-    <a class="btn btn--primary" routerLink="/blog">
-      Browse all posts
-      <app-icon name="arrow-right" size="0.9rem" />
-    </a>
-  </div>
+  <h1>Post not found</h1>
+  <p>That post does not exist, or it is still a draft.</p>
+  <p><a routerLink="/blog">Browse all posts</a></p>
 }

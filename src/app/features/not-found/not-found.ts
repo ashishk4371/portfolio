@@ -2,13 +2,15 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { SeoService } from '../../core/services';
-import { Icon } from '../../shared/components/icon/icon';
 
 @Component({
   selector: 'app-not-found',
-  imports: [RouterLink, Icon],
-  templateUrl: './not-found.html',
-  styleUrl: './not-found.scss',
+  imports: [RouterLink],
+  template: `
+    <h1>Page not found</h1>
+    <p>That address doesn't match anything on this site.</p>
+    <p><a routerLink="/">Back to the home page</a></p>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotFound {

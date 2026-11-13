@@ -34,13 +34,10 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": ["localhost", "127.0.0.1", "ashishkumar.dev", "www.ashishkumar.dev"]
+              "allowedHosts": ["localhost", "127.0.0.1", "byashish.dev", "www.byashish.dev"]
             },
             "ssr": {
               "entry": "src/server.ts"
-            },
-            "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
             },
             "extractLicenses": true
           },

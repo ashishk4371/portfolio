@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const BROWSER_DIR = join(ROOT, 'dist/portfolio/browser');
-const ORIGIN = (process.env.SITE_ORIGIN ?? 'https://ashishkumar.dev').replace(/\/$/, '');
+const ORIGIN = (process.env.SITE_ORIGIN ?? 'https://byashish.dev').replace(/\/$/, '');
 
 /** Routes that should never be advertised to crawlers. */
 const EXCLUDED = new Set(['/404']);

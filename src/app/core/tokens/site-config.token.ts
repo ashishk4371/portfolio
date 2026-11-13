@@ -25,7 +25,7 @@ export const SITE_CONFIG = new InjectionToken<SiteConfig>('SITE_CONFIG', {
 });
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
-  origin: 'https://ashishkumar.dev',
+  origin: 'https://byashish.dev',
   siteName: 'Ashish Kumar',
   defaultDescription:
     'Software engineer building fast, accessible products with TypeScript, Angular, Node.js and Go.',
