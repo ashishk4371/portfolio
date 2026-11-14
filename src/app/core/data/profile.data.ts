@@ -4,7 +4,7 @@ export const PROFILE: Profile = {
   name: 'Ashish Kumar',
   role: 'Software Engineer',
   summary: [
-    'I am a software engineer based in New Delhi, India. I work mostly on backend systems in Java and Spring Boot, with Kafka, PostgreSQL and Snowflake for the data side, and Angular when a project needs a front end.'
+    'In a world full of AI slop, here\'s my 2 rupees.'
   ],
   location: 'New Delhi, India',
   email: 'ashishk4371@gmail.com',
