@@ -3,9 +3,7 @@ import { Profile } from '../models';
 export const PROFILE: Profile = {
   name: 'Ashish Kumar',
   role: 'Software Engineer',
-  summary: [
-    'In a world full of AI slop, here\'s my 2 rupees.'
-  ],
+  summary: ["In a world full of AI slop, here's my 2 rupees."],
   location: 'New Delhi, India',
   email: 'ashishk4371@gmail.com',
   photo: '/profile.svg',

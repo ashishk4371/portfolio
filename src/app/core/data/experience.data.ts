@@ -10,17 +10,27 @@ export const EXPERIENCES: readonly Experience[] = [
     startDate: '2024-01-08',
     endDate: null,
     location: 'Gurugram · Hybrid',
-    summary:
-      '',
+    summary: '',
     highlights: [
       'Identified reliability gaps in the existing reporting pipeline and led the design of a configurable data orchestration framework from scratch, enabling real-time processing and daily generation of 50K+ financial reports.',
-      'Drove technical design and build of a multi-asset Matching Platform for asset managers, reducing confirmation oversight cost by 35%; platform was selected to represent HUB\'s flagship trade capability at the Symphony Innovate Conference.',
+      "Drove technical design and build of a multi-asset Matching Platform for asset managers, reducing confirmation oversight cost by 35%; platform was selected to represent HUB's flagship trade capability at the Symphony Innovate Conference.",
       'Recognized that ad-hoc coordination across ingestion pipelines and distributed services was causing diﬃculty in maintaining consistency, and led the design and build of a Temporal + SignalR-based orchestration system that became the standard pattern for real-time coordination across Hub Platform services.',
       'Led consolidation of 120+ fragmented ETL pipelines into a unified framework, making the case for the migration, driving execution across teams, and improving reliability, traceability, and throughput by 70%.',
       'Designed and shipped a self-service analytics platform with automated SQL-based computations, eliminating manual analysis work and saving 15+ hours per report across teams.',
-      'Mentored engineers through code and design reviews on the orchestration and ETL systems, established error-handling conventions adopted across our reviews.'
+      'Mentored engineers through code and design reviews on the orchestration and ETL systems, established error-handling conventions adopted across our reviews.',
     ],
-    stack: ['Java', 'Spring Boot', 'Snowflake DB', 'PostgreSQL', 'Azure', 'Kafka', 'Temporal', 'SignalR', 'Angular', 'TypeScript'],
+    stack: [
+      'Java',
+      'Spring Boot',
+      'Snowflake DB',
+      'PostgreSQL',
+      'Azure',
+      'Kafka',
+      'Temporal',
+      'SignalR',
+      'Angular',
+      'TypeScript',
+    ],
   },
   {
     id: 'monster',
@@ -30,13 +40,12 @@ export const EXPERIENCES: readonly Experience[] = [
     startDate: '2021-01-01',
     endDate: '2023-03-31',
     location: 'Noida · Hybrid',
-    summary:
-      '',
+    summary: '',
     highlights: [
       'Re-architected core Seeker Platform services to millisecond latency using Java microservices, Elasticsearch, and Kafka-based event pipelines, supporting scale to 500,000+ users.',
       'Owned the Resume Builder microservice end-to-end — architecture, on-call, and roadmap — maintaining 99.99% uptime while scaling to 250,000+ monthly downloads and driving 35% engagement growth.',
       'Designed real-time job recommendation pipelines using Kafka consumers, delivering personalized results to 40,000+ daily active users.',
-      'Built a dynamic PDF generation and routing module using Thymeleaf, improving retention by 20%.'
+      'Built a dynamic PDF generation and routing module using Thymeleaf, improving retention by 20%.',
     ],
     stack: ['Java', 'Spring Boot', 'PostgreSQL', 'Redis', 'Kafka', 'Docker'],
   },
